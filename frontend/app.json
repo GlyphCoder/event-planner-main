@@ -1,0 +1,8 @@
+{
+  "expo": {
+    "name": "Event Planner",
+    "slug": "event-planner-app",
+    "version": "1.0.0",
+    "platforms": ["ios", "android", "web"]
+  }
+}
