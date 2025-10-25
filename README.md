@@ -1,4 +1,12 @@
 # Event Planner
+frontend terminal-
+cd frotend
+npm install 
+npm run web/npm start
+
+backend terminal-
+npm install
+npm start
 
 A full-stack event planning application (frontend + backend). This README explains how to run the project locally, what environment variables you need for the backend and frontend, and common start/build commands.
 
