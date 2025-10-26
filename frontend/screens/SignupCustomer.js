@@ -28,6 +28,26 @@ export default function SignupCustomer({ navigation }) {
       return;
     }
 
+    // Validate email has @
+    if (!form.email.includes('@')) {
+      Alert.alert('Error', 'Email must contain @ symbol');
+      return;
+    }
+
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(form.email)) {
+      Alert.alert('Error', 'Please enter a valid email address');
+      return;
+    }
+
+    // Validate password is alphanumeric
+    const alphanumericRegex = /^[a-zA-Z0-9]+$/;
+    if (!alphanumericRegex.test(form.password)) {
+      Alert.alert('Error', 'Password must contain only letters and numbers (alphanumeric)');
+      return;
+    }
+
     if (form.password !== form.confirmPassword) {
       Alert.alert('Error', 'Passwords do not match');
       return;

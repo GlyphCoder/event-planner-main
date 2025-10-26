@@ -41,6 +41,35 @@ export default function SignupVendor({ navigation }) {
       return;
     }
 
+    // Validate email has @
+    if (!form.email.includes('@')) {
+      Alert.alert('Error', 'Email must contain @ symbol');
+      return;
+    }
+
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(form.email)) {
+      Alert.alert('Error', 'Please enter a valid email address');
+      return;
+    }
+
+    // Validate phone number is 10 digits
+    if (form.phone && form.phone.trim() !== '') {
+      const phoneRegex = /^\d{10}$/;
+      if (!phoneRegex.test(form.phone)) {
+        Alert.alert('Error', 'Phone number must be exactly 10 digits');
+        return;
+      }
+    }
+
+    // Validate password is alphanumeric
+    const alphanumericRegex = /^[a-zA-Z0-9]+$/;
+    if (!alphanumericRegex.test(form.password)) {
+      Alert.alert('Error', 'Password must contain only letters and numbers (alphanumeric)');
+      return;
+    }
+
     if (form.password !== form.confirmPassword) {
       Alert.alert('Error', 'Passwords do not match');
       return;
@@ -57,7 +86,10 @@ export default function SignupVendor({ navigation }) {
         name: form.name,
         email: form.email,
         password: form.password,
-        usertype: 'vendor' 
+        usertype: 'vendor',
+        phone: form.phone,
+        category: form.category,
+        businessName: form.businessName
       });
       
       if (result?.error) {
@@ -70,8 +102,12 @@ export default function SignupVendor({ navigation }) {
           Alert.alert('Registration Failed', result.error);
         }
       } else {
-        Alert.alert('Success', 'Vendor registered successfully! You are now logged in.');
-        // User is automatically logged in via AuthContext, no need to navigate to Login
+        Alert.alert('Success', 'Vendor registered successfully! You are now logged in.', [
+          { text: 'OK', onPress: () => {
+            // Force navigation to dashboard after successful signup
+            // Navigation will be handled by AppNavigator based on user state
+          }}
+        ]);
       }
     } catch (error) {
       Alert.alert('Error', 'Registration failed. Please try again.');

@@ -6,6 +6,8 @@ const userSchema = new mongoose.Schema({
   password: { type: String, required: true },
   usertype: { type: String, enum: ['admin', 'vendor', 'customer'], required: true },
   refreshToken: { type: String },
+  // Link to the specific profile based on user type
+  profileId: { type: mongoose.Schema.Types.ObjectId, refPath: 'usertype' },
 }, { timestamps: true });
 
 export default mongoose.model('User', userSchema);

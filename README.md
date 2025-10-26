@@ -1,14 +1,21 @@
-# Event Planner
-frontend terminal-
-cd frotend
-npm install 
-npm run web/npm start
+# Event Planner - AI-Powered Event Management Platform
 
-backend terminal-
-npm install
-npm start
+A comprehensive full-stack event planning application with AI-powered features including automated storybook generation, social media content creation, and intelligent vendor matching. Built with Node.js, Express, MongoDB, and Google Gemini AI.
 
-A full-stack event planning application (frontend + backend). This README explains how to run the project locally, what environment variables you need for the backend and frontend, and common start/build commands.
+## 🚀 Key Features
+
+### AI-Powered Features
+- **AI Storybook Generation**: Automatically generate beautiful narrative stories from event photos using Google Gemini
+- **Social Media Assistant**: Auto-generate captions and hashtags for event posts
+- **Intelligent Vendor Matching**: AI-powered vendor recommendations based on budget and preferences
+- **Event Timeline Generator**: Automatically create event timelines and checklists
+
+### Core Features
+- **Budget-Friendly Vendor Finder**: Filter vendors by budget, location, ratings with AI recommendations
+- **Digital Invitations**: Create and track invitations with status monitoring
+- **Gift Marketplace**: Browse and order customizable gifts with order tracking
+- **Event Management**: Complete event lifecycle management with budget tracking
+- **Social Media Automation**: Multi-platform posting with engagement tracking
 
 > NOTE: Do NOT commit real secrets (API keys, JWT secrets, DB URIs) to your repository. Use a .env file (and add it to .gitignore) or your platform's secret manager.
 
@@ -35,73 +42,93 @@ Adjust paths below if your repo structure differs.
 ## Prerequisites
 - Node.js (v16+ recommended)
 - npm (or yarn / pnpm)
-- MongoDB instance (Atlas or local) or other configured DB
+- MongoDB instance (Atlas or local)
+- Google Gemini API key ([Get it here](https://makersuite.google.com/app/apikey))
 - (Optional) Cloudinary account for image uploads
 
 ## Backend
 
 1. Copy the example environment file to create your real .env:
-   - cp backend/.env.example backend/.env
+   - cp backend/env.example backend/.env
 
-2. Install and run:
-   - cd backend
-   - npm install
-   - npm run dev   # for development (requires nodemon)
-   - npm start     # for production
+2. Install dependencies:
+   ```bash
+   cd backend
+   npm install
+   ```
 
-3. Common package.json scripts you may have:
-   - "start": "node dist/index.js"
-   - "dev": "nodemon src/index.js"
-   - "build": "tsc" (if using TypeScript)
+3. Configure environment variables in backend/.env
+   - Get MongoDB URI from MongoDB Atlas or use local MongoDB
+   - Get Google Gemini API key from https://makersuite.google.com/app/apikey
+   - Set JWT secrets (generate strong random strings)
+   - (Optional) Configure Cloudinary for image uploads
+
+4. Run the server:
+   ```bash
+   npm run dev   # Development mode with auto-reload
+   npm start     # Production mode
+   ```
 
 ### Backend environment variables
-Create backend/.env (not committed). Example variables the backend expects:
+Create `backend/.env` (not committed). See `backend/env.example` for all available options.
 
-PORT=3000
-JWT_SECRET=your_jwt_secret
-JWT_REFRESH_SECRET=your_refresh_secret
-CLOUDINARY_CLOUD_NAME=your_cloud_name
-CLOUDINARY_API_KEY=your_api_key
-CLOUDINARY_API_SECRET=your_api_secret
-MONGO_URI="mongodb+srv://<username>:<password>@cluster0.example.mongodb.net/<dbname>?retryWrites=true&w=majority"
+**Required variables:**
+- `MONGO_URI` - MongoDB connection string
+- `JWT_SECRET` - Secret for JWT token signing
+- `JWT_REFRESH_SECRET` - Secret for refresh token
+- `GEMINI_API_KEY` - Google Gemini API key for AI features
 
-Replace <username>, <password>, and <dbname> with your credentials and DB name. Use the secure credentials store in production.
+**Optional variables:**
+- `CLOUDINARY_*` - For image uploads
+- `SMTP_*` - For sending invitations via email
+- `FRONTEND_URL` - For CORS configuration
 
-(If you use the example you provided, replace the placeholders appropriately. Do not commit secrets.)
+**Quick setup:**
+1. Copy `backend/env.example` to `backend/.env`
+2. Fill in the required values
+3. Get your Gemini API key from [Google AI Studio](https://makersuite.google.com/app/apikey)
 
 ## Frontend
 
 1. Install and run:
-   - cd frontend
-   - npm install
-   - npm run dev   # typical for frameworks like Vite/Next in dev mode
-   - npm run build # build for production
-   - npm run start # serve production build (if configured)
+   ```bash
+   cd frontend
+   npm install
+   npm start     # Start Expo development server
+   npm run ios   # Run on iOS simulator
+   npm run android # Run on Android emulator
+   ```
 
-2. Frontend environment variables
-Frontend frameworks typically use prefixed variables (e.g., REACT_APP_, NEXT_PUBLIC_).
-Example (frontend/.env.local):
-REACT_APP_API_BASE_URL=http://localhost:3000/api
-REACT_APP_CLOUDINARY_CLOUD_NAME=your_cloud_name
+2. The frontend uses React Native with Expo. The API client is configured to connect to the backend at `http://localhost:3000` by default. Make sure your backend is running before starting the frontend.
 
-Make sure variables used by the client are safe to expose (do not put secrets like DB credentials or private JWT secrets in client envs).
+## Running locally — Quick Start
 
-## Running locally — summary
+### Start Backend:
+```bash
+cd backend
+cp env.example .env
+# Edit .env with your MongoDB URI and Gemini API key
+npm install
+npm run dev
+```
+Backend will run on `http://localhost:3000`
 
-Start backend:
-- cd backend
-- cp .env.example .env
-- edit .env to set the real values
-- npm install
-- npm run dev
+### Start Frontend:
+```bash
+cd frontend
+npm install
+npm start
+```
+Scan the QR code with Expo Go app on your phone or press `i` for iOS simulator, `a` for Android emulator.
 
-Start frontend:
-- cd frontend
-- npm install
-- update frontend/.env.local or .env
-- npm run dev
+### Testing AI Features:
+1. Sign up or log in as a customer
+2. Create an event
+3. Try creating an AI storybook with event photos
+4. Generate social media posts with AI captions
+5. Get AI vendor recommendations based on your budget
 
-Open the frontend at http://localhost:3000 (or as your frontend dev server prints). The backend usually runs at http://localhost:3000 (or as set in PORT).
+For detailed setup instructions, see `IMPLEMENTATION_GUIDE.md`
 
 ## Building for production
 
@@ -125,12 +152,36 @@ Open the frontend at http://localhost:3000 (or as your frontend dev server print
 - If Cloudinary uploads fail, verify cloud name, API key, and secret.
 - For CORS errors, ensure backend allows the frontend origin in dev and production.
 
+## AI Features in Detail
+
+### Google Gemini Integration
+The app uses Google Gemini AI for:
+- **Storybook Generation**: Multimodal analysis of photos to create narrative stories
+- **Social Media Content**: Auto-generate engaging captions and hashtags
+- **Vendor Recommendations**: Intelligent suggestions based on budget and preferences
+- **Event Timeline**: Automated event planning with milestones and reminders
+
+### API Endpoints
+
+**AI Endpoints:**
+- `POST /api/media/storybooks` - Create AI-generated storybook
+- `POST /api/media/posts` - Generate AI social media post
+- `GET /api/vendors/recommendations` - Get AI vendor recommendations
+- `POST /api/events/:id/timeline` - Generate AI event timeline
+
+See `IMPLEMENTATION_GUIDE.md` for complete API documentation.
+
 ## Contributing
 - Fork the repository, create a feature branch, and open a pull request.
 - Describe changes and add tests where relevant.
 
+## Documentation
+- `IMPLEMENTATION_GUIDE.md` - Complete setup and API documentation
+- `SETUP_SUMMARY.md` - Quick reference for implemented features
+- `database schema.md` - Database schema reference
+
 ## License
-Add your project license here (e.g., MIT).
+MIT License
 
 ---
 

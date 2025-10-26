@@ -16,6 +16,7 @@
 
 // navigation/AppNavigator.js
 import React, { useContext } from 'react';
+import { View, Text } from 'react-native';
 import AuthStack from './AuthStack';
 import DrawerNavigator from './DrawerNavigator';
 import { AuthContext } from '../context/AuthContext';
@@ -24,6 +25,10 @@ export default function AppNavigator() {
   const { user } = useContext(AuthContext);
   console.log('AppNavigator: User state', user);
   
-  return user ? <DrawerNavigator /> : <AuthStack />;
+  if (user && user.id) {
+    return <DrawerNavigator />;
+  }
+  
+  return <AuthStack />;
 }
 

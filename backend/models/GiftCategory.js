@@ -1,11 +1,14 @@
 import mongoose from 'mongoose';
 
 const giftCategorySchema = new mongoose.Schema({
-  giftId: String,
-  giftName: String,
+  giftId: { type: String, required: true, unique: true },
+  giftName: { type: String, required: true },
   imageUrl: String,
-  giftPrice: Number,
-  quantityAvailable: Number,
-});
+  giftPrice: { type: Number, required: true },
+  quantityAvailable: { type: Number, default: 0 },
+  category: String,
+  description: String,
+  customizable: { type: Boolean, default: false }
+}, { timestamps: true });
 
 export default mongoose.model('GiftCategory', giftCategorySchema);

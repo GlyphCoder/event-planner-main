@@ -80,11 +80,26 @@ export default function Login({ navigation }) {
 
             <View style={styles.signupContainer}>
               <Text style={styles.signupText}>Don't have an account? </Text>
+            </View>
+
+            <View style={styles.signupOptions}>
               <Text 
-                style={styles.signupLink}
+                style={styles.signupOption}
                 onPress={() => navigation.navigate('SignupCustomer')}
               >
-                Sign Up
+                Sign Up as Customer
+              </Text>
+              <Text 
+                style={styles.signupOption}
+                onPress={() => navigation.navigate('SignupVendor')}
+              >
+                Sign Up as Vendor
+              </Text>
+              <Text 
+                style={styles.signupOption}
+                onPress={() => navigation.navigate('SignupAdmin')}
+              >
+                Sign Up as Admin
               </Text>
             </View>
           </View>
@@ -160,14 +175,25 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     marginTop: 10,
+    marginBottom: 10,
   },
   signupText: {
     color: '#ccc',
     fontSize: 15,
   },
-  signupLink: {
+  signupOptions: {
+    marginTop: 10,
+  },
+  signupOption: {
     color: '#fff',
-    fontSize: 15,
+    fontSize: 14,
     fontWeight: '600',
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    padding: 12,
+    borderRadius: 8,
+    marginVertical: 5,
+    textAlign: 'center',
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.3)',
   },
 });
