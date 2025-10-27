@@ -123,6 +123,7 @@ export const signup = async (req, res) => {
         const vendor = new Vendor({ 
           name, 
           email, 
+          businessName: businessName || '',
           phone: phone || '',
           category: category || '',
           location: '',

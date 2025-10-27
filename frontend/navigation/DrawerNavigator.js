@@ -18,7 +18,7 @@ export default function DrawerNavigator() {
   return (
     <Drawer.Navigator
       drawerContent={(props) => <CustomDrawerContent {...props} />}
-      screenOptions={{ headerShown: true }}
+      screenOptions={{ headerShown: false }}
     >
       <Drawer.Screen name="Dashboard" component={Dashboard} />
       {user?.role === 'admin' && (

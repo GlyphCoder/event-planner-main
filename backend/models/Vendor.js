@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 const vendorSchema = new mongoose.Schema({
   name: { type: String, required: true },
   email: { type: String, required: true, unique: true },
+  businessName: String,
   phone: String,
   category: String,
   ratings: { type: Number, default: 0 },

@@ -36,6 +36,7 @@ export default function SignupVendor({ navigation }) {
   const [loading, setLoading] = useState(false);
 
   const handleSignup = async () => {
+    console.log('handleSignup for vendor called');
     if (!form.name || !form.email || !form.password || !form.confirmPassword || !form.category || !form.businessName) {
       Alert.alert('Error', 'Please fill in all required fields');
       return;
@@ -82,6 +83,7 @@ export default function SignupVendor({ navigation }) {
 
     setLoading(true);
     try {
+      console.log('Calling signUp from AuthContext');
       const result = await signUp({ 
         name: form.name,
         email: form.email,
@@ -91,6 +93,7 @@ export default function SignupVendor({ navigation }) {
         category: form.category,
         businessName: form.businessName
       });
+      console.log('signUp result:', result);
       
       if (result?.error) {
         if (result.error.includes('already exists')) {
@@ -110,6 +113,7 @@ export default function SignupVendor({ navigation }) {
         ]);
       }
     } catch (error) {
+      console.error('Error in handleSignup:', error);
       Alert.alert('Error', 'Registration failed. Please try again.');
     } finally {
       setLoading(false);
@@ -195,7 +199,10 @@ export default function SignupVendor({ navigation }) {
 
             <AppButton
               title="Register as Vendor"
-              onPress={handleSignup}
+              onPress={() => {
+                console.log('Vendor button pressed');
+                handleSignup();
+              }}
               loading={loading}
               style={styles.signupButton}
             />

@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Alert, StatusBar } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import { AuthContext } from '../context/AuthContext';
 import { getAllVendors } from '../services/vendorService';
 import { getAllEvents } from '../services/eventService';
@@ -86,6 +87,9 @@ export default function Dashboard({ navigation }) {
     <View style={styles.container}>
       <StatusBar barStyle="light-content" />
       <View style={styles.headerContainer}>
+        <TouchableOpacity onPress={() => navigation.openDrawer()} style={styles.menuButton}>
+          <Ionicons name="menu" size={32} color="white" />
+        </TouchableOpacity>
         <View>
           <Text style={styles.greeting}>Welcome back!</Text>
           <Text style={styles.header}>{user.name}</Text>
@@ -339,5 +343,8 @@ const styles = StyleSheet.create({
     fontSize: 13, 
     color: '#999', 
     marginBottom: 4 
+  },
+  menuButton: {
+    marginRight: 15,
   },
 });

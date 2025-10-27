@@ -23,6 +23,7 @@ export default function SignupCustomer({ navigation }) {
   const [loading, setLoading] = useState(false);
 
   const handleSignup = async () => {
+    console.log('handleSignup called');
     if (!form.name || !form.email || !form.password || !form.confirmPassword) {
       Alert.alert('Error', 'Please fill in all fields');
       return;
@@ -139,7 +140,10 @@ export default function SignupCustomer({ navigation }) {
 
             <AppButton
               title="Register as Customer"
-              onPress={handleSignup}
+              onPress={() => {
+                console.log('Button pressed');
+                handleSignup();
+              }}
               loading={loading}
               style={styles.signupButton}
             />
